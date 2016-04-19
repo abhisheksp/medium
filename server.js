@@ -12,17 +12,19 @@ router.get('/:query', function (req, res) {
         if (!error && response.statusCode == 200) {
             var $ = cheerio.load(body);
             var posts = [];
-            $('div.postItem').each(function(i, element){
+            $('div.postItem').each(function (i, element) {
+                var postElement = $(element);
+                var feedSummary = postElement.find('div.postMetaInline-feedSummary');
                 var post = {
                     metadata: {
-                        authorName: $(element).find('div.postMetaInline-feedSummary').find('a').first().text(),
-                        authorProfileLink: $(element).find('div.postMetaInline-feedSummary').find('a').first().attr('href'),
-                        authorProfileImage: $(element).find('div.postMetaInline-avatar').find('img').attr('src'),
-                        publishedDate: $(element).find('div.postMetaInline-feedSummary').find('a').last().text(),
-                        readingTime: $(element).find('div.postMetaInline-feedSummary').find('span.readingTime').text()
+                        authorName: feedSummary.find('a').first().text(),
+                        authorProfileLink: feedSummary.find('a').first().attr('href'),
+                        authorProfileImage: postElement.find('div.postMetaInline-avatar').find('img').attr('src'),
+                        publishedDate: feedSummary.find('a').last().text(),
+                        readingTime: feedSummary.find('span.readingTime').text()
                     },
-                    title: $(element).find('div.section-inner').children().not('figure').first().text(),
-                    subTitle: $(element).find('div.section-inner').children().not('figure').last().text()
+                    title: postElement.find('div.section-inner').children().not('figure').first().text(),
+                    subTitle: postElement.find('div.section-inner').children().not('figure').last().text()
                 };
                 posts.push(post);
             });
