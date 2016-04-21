@@ -3,19 +3,27 @@
   "version": "1.0.0",
   "description": "API to query medium.com and return matched posts.",
   "main": "server.js",
-  "engines": {
-    "node": "5.4.0"
-  },
   "dependencies": {
     "cheerio": "^0.20.0",
     "express": "^4.13.4",
     "request": "^2.72.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+  "engine": {
+    "node": "*",
+    "npm": "*"
   },
-  "author": "Abhishek SP",
-  "license": "MIT"
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhisheksp/medium.git"
+  },
+  "author": "Abhishek SP <abhishesp1993@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abhisheksp/medium/issues"
+  },
+  "homepage": "https://github.com/abhisheksp/medium"
 }
