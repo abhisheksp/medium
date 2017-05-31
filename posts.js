@@ -10,27 +10,29 @@ router.get('/:query', function (req, res) {
         if (!error && response.statusCode == 200) {
             var $ = cheerio.load(body);
             var posts = [];
-            $('div.postItem').each(function (i, element) {
-                var postElement = $(element);
-                var feedSummary = postElement.find('div.postMetaInline-feedSummary');
+            $('div.postArticle').each(function () {
+                var title = $(this).find(':header').text();
+                var link = $(this).find('div.postArticle-content').find('a').first().attr('href');
+                var readingTime = $(this).find('span.readingTime').attr('title');
+                var publishDateTime = $(this).find('time').attr('datetime');
+                var authorName = $(this).find('div.postMetaInline-authorLockup').find('a').first().text();
+                var authorLink = $(this).find('div.postMetaInline-authorLockup').find('a').first().attr('href');
+                var authorAvatar = $(this).find('img.avatar-image').attr('src');
                 var post = {
-                    metadata: {
-                        authorName: feedSummary.find('a').first().text(),
-                        authorProfileLink: feedSummary.find('a').first().attr('href'),
-                        authorProfileImage: postElement.find('div.postMetaInline-avatar').find('img').attr('src'),
-                        publishedDate: feedSummary.find('a').last().text(),
-                        readingTime: feedSummary.find('span.readingTime').text()
-                    },
-                    title: postElement.find('div.section-inner').children().not('figure').first().text(),
-                    subTitle: postElement.find('div.section-inner').children().not('figure').last().text(),
-                    link: postElement.find('article.postArticle').find('a').first().attr('href')
+                    title: title,
+                    link: link,
+                    readingTime: readingTime,
+                    publishedDateTime: publishDateTime,
+                    authorName: authorName,
+                    authorLink: authorLink,
+                    authorAvatar: authorAvatar
                 };
                 posts.push(post);
             });
-            res.json({success: posts, error: false});
+            res.json(posts);
         }
         else {
-            res.json({success: null, error: true});
+          res.status(500).send({error: 'something went wrong with the medium endpoint'});
         }
     });
 });

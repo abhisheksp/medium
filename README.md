@@ -1,27 +1,28 @@
-#Medium API to search for medium.com articles
+# Medium API to search for medium.com articles
 
 Live API Link : https://medium-abhisheksp.rhcloud.com/
 
 Request Format : GET /medium/posts/{search_query}
 
 Response Format : JSON
+
+Success Response
+```json
+[{
+	"title": "same title",
+	"link": "https://examplelink.com",
+	"readingTime": "8 min read",
+	"publishedDateTime": "2015-06-20T01:24:16.341Z",
+	"authorName": "sample authorname",
+	"authorLink": "https://examplelink.com",
+	"authorAvatar": "https://examplelink.com/example.png"
+}]
+```
+
+Failure Response
 ```json
  {
-   "success": [
-     {
-       "metadata": {
-         "authorName": "Author's name",
-         "authorProfileLink": "Author's medium.com profile link",
-         "authorProfileImage": "Author's medium.com profile picture",
-         "publishedDate": "published date",
-         "readingTime": "reading time"
-       },
-       "title": "Article title",
-       "subTitle": "Article subtitle",
-       "link": "Article link"
-     }
-   ],
-   "error": "true/false indicates the status of the response"
+   "error": "error message"
  }
 ```
 
